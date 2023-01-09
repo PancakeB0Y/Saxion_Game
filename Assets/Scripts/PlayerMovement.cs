@@ -4,41 +4,57 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody rb;
-    [SerializeField] float movementSpeed = 5;
-    [SerializeField] float jumpImpulse = 5;
+    [SerializeField] CharacterController controller;
+    [SerializeField] Transform cam;
+
+    [SerializeField] float speed = 5;
+
+    [SerializeField] float turnSmoothTime = 0.1f;
+    float smoothTurnVelocity;
+
+    [SerializeField] float gravity = -19.62f;
+    public Vector3 velocity;
+
     [SerializeField] Transform groundCheck;
-    [SerializeField] LayerMask groundLayer;
+    [SerializeField] LayerMask groundMask;
+    [SerializeField] float groundDistance = 0.1f;
+    bool isGrounded;
 
-    [SerializeField] GameObject cameraObject;
-    float rotation;
+    [SerializeField] float jumpImpulse = 1f;
 
-    void Start()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        Cursor.visible = false;
     }
-
     void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        rb.velocity = new Vector3(horizontalInput * movementSpeed, rb.velocity.y, verticalInput * movementSpeed);
-
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        if (isGrounded && velocity.y < 0)
         {
-            Jump();
+            velocity.y = -2f;
         }
-        //rotation = cameraObject.Find("camrotY").GetComponent<float>();
-    }
 
-    void Jump()
-    {
-        rb.velocity = new Vector3(rb.velocity.x, jumpImpulse, rb.velocity.z);
-    }
-    bool IsGrounded()
-    {
-        return Physics.CheckSphere(groundCheck.position, .1f, groundLayer);
-    }
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+        Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
+        if(direction.magnitude >= 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothTurnVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDirection * speed * Time.deltaTime);
+        }
+
+        velocity.y += gravity * Time.deltaTime;
+
+        controller.Move(velocity * Time.deltaTime);
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpImpulse * -2f * gravity);
+        }
+    }
 }
