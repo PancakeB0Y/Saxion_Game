@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] CharacterController controller;
     [SerializeField] Transform cam;
 
-    [SerializeField] float speed = 5;
+    [SerializeField] float speed = 10f;
 
     [SerializeField] float turnSmoothTime = 0.1f;
     float smoothTurnVelocity;
