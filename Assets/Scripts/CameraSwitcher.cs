@@ -46,7 +46,7 @@ public class CameraSwitcher : MonoBehaviour
         
         for(int i = 0; i < cameraCount; i++)
         {
-            Camera curCam = cameras[cameraCount - 1];
+            Camera curCam = cameras[i];
             float curDistance = Vector3.Distance(transform.position, curCam.transform.position);
             if (curDistance < minDistance)
             {
