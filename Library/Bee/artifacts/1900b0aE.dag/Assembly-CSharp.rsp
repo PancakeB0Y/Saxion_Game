@@ -373,7 +373,7 @@
 "Assets/Scripts/CameraSwitcher.cs"
 "Assets/Scripts/LockOnTarget.cs"
 "Assets/Scripts/PlayerMovement.cs"
-"Assets/Scripts/RandomSpawner.cs"
+"Assets/Scripts/SphereSpawner.cs"
 "Assets/Scripts/StaticValues.cs"
 -langversion:9.0
 

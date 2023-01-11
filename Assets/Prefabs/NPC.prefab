@@ -156,9 +156,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spherePrefab: {fileID: 8070876651380824180, guid: f675d61a67597c24fbd104a118eb1adb, type: 3}
-  x: 1
-  y: 1
   distanceFromCam: 2
+  speed: 1
+  sphereCount: 20
+  spawnRate: 0.5
 --- !u!1 &2297163695296416689
 GameObject:
   m_ObjectHideFlags: 0
