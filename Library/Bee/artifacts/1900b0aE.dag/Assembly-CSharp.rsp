@@ -372,9 +372,8 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/CameraSwitcher.cs"
 "Assets/Scripts/LockOnTarget.cs"
+"Assets/Scripts/Minigame.cs"
 "Assets/Scripts/PlayerMovement.cs"
-"Assets/Scripts/SphereSpawner.cs"
-"Assets/Scripts/StaticValues.cs"
 -langversion:9.0
 
 /deterministic

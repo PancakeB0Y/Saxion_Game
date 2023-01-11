@@ -118,7 +118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2297163694432478560}
-  - component: {fileID: 6948746507746933522}
+  - component: {fileID: 9060311593436841877}
   m_Layer: 7
   m_Name: NPC
   m_TagString: Untagged
@@ -143,7 +143,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6948746507746933522
+--- !u!114 &9060311593436841877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,10 +152,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2297163694432478561}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 980fe9e6f537f8842b38e5e0a7c5e08f, type: 3}
+  m_Script: {fileID: 11500000, guid: 90c832a44b42ce04a918592b1a3b7db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spherePrefab: {fileID: 8070876651380824180, guid: f675d61a67597c24fbd104a118eb1adb, type: 3}
+  sphereLayer:
+    serializedVersion: 2
+    m_Bits: 256
   distanceFromCam: 2
   speed: 1
   sphereCount: 20

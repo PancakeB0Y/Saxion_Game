@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static StaticValues;
+using static Minigame;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (!isInGame) {
+        if (isInMinigame) {
             return;
         }
 

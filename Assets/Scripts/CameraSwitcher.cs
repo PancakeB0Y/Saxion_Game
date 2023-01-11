@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static StaticValues;
+using static Minigame;
 public class CameraSwitcher : MonoBehaviour
 {
     [SerializeField] Camera mainCamera;
@@ -51,15 +51,7 @@ public class CameraSwitcher : MonoBehaviour
     {
         mainCamera.enabled = !mainCamera.enabled;
         closestCam.enabled = !closestCam.enabled;
-        isInGame = !isInGame;
-        /*
-        for (int i = 0; i < cameraCount; i++)
-        {
-            if (cameras[cameraCount - 1].enabled == true && cameras[cameraCount - 1] != closestCam)
-            {
-                cameras[cameraCount - 1].enabled = false;
-            }
-        }
-        */
+        isInMinigame = !isInMinigame;
+        Cursor.visible = !Cursor.visible;
     }
 }

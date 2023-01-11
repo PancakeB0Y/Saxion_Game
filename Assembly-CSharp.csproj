@@ -57,10 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraSwitcher.cs" />
-    <Compile Include="Assets\Scripts\SphereSpawner.cs" />
     <Compile Include="Assets\Scripts\LockOnTarget.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\StaticValues.cs" />
+    <Compile Include="Assets\Scripts\Minigame.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
