@@ -9,7 +9,6 @@ public class Minigame : MonoBehaviour
     Camera curCamera;
 
     [SerializeField] GameObject spherePrefab;
-    [SerializeField] LayerMask sphereLayer;
     [SerializeField] float sphereDistanceFromCam = 2f;
     [SerializeField] float sphereSpeed = 1f;
 
@@ -40,7 +39,7 @@ public class Minigame : MonoBehaviour
             Vector3 mousePos = Input.mousePosition;
             Ray ray = curCamera.ScreenPointToRay(mousePos);
 
-            if(Physics.Raycast(ray, out RaycastHit hitData, 100, sphereLayer))
+            if(Physics.Raycast(ray, out RaycastHit hitData, 100, 1 << spherePrefab.layer))
             {
                 spheres.Remove(hitData.transform.gameObject);
                 Destroy(hitData.transform.gameObject);
