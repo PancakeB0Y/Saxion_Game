@@ -1,47 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static StaticValues;
 public class CameraSwitcher : MonoBehaviour
 {
     [SerializeField] Camera mainCamera;
     [SerializeField] Camera[] cameras;
+    int cameraCount;
 
     [SerializeField] float range = 5f;
-    [SerializeField] LayerMask npcMask;
-
-    int cameraCount = 0;
+    [SerializeField] LayerMask npcLayer;
 
     private void Start()
     {
         cameraCount = cameras.Length;
-        mainCamera.enabled = true;
+
     }
 
     void Update()
     {
-        if(Physics.CheckSphere(transform.position, range, npcMask))
+        if(Physics.CheckSphere(transform.position, range, npcLayer))
         {
             if (Input.GetKeyDown("e"))
             {
-                Camera closestCam = GetClosest();
-
-                mainCamera.enabled = !mainCamera.enabled;
-                closestCam.enabled = !closestCam.enabled;
-                for(int i = 0; i < cameraCount; i++)
-                {
-                    if(cameras[cameraCount - 1].enabled == true && cameras[cameraCount - 1] != closestCam)
-                    {
-                        cameras[cameraCount - 1].enabled = false;
-                    }
-                }
+                SwitchToClosestCam(GetClosestCam());
             }
         }
     }
 
-    Camera GetClosest()
+    Camera GetClosestCam()
     {
-        Camera closestCamera = new Camera();
+        Camera closestCam = new Camera();
         float minDistance = Mathf.Infinity;
         
         for(int i = 0; i < cameraCount; i++)
@@ -51,10 +40,26 @@ public class CameraSwitcher : MonoBehaviour
             if (curDistance < minDistance)
             {
                 minDistance = curDistance;
-                closestCamera = curCam;
+                closestCam = curCam;
             }
         }
 
-        return closestCamera;
+        return closestCam;
+    }
+
+    void SwitchToClosestCam(Camera closestCam)
+    {
+        mainCamera.enabled = !mainCamera.enabled;
+        closestCam.enabled = !closestCam.enabled;
+        isInGame = !isInGame;
+        /*
+        for (int i = 0; i < cameraCount; i++)
+        {
+            if (cameras[cameraCount - 1].enabled == true && cameras[cameraCount - 1] != closestCam)
+            {
+                cameras[cameraCount - 1].enabled = false;
+            }
+        }
+        */
     }
 }

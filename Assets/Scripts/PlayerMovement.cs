@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static StaticValues;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,27 +9,29 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform cam;
 
     [SerializeField] float speed = 10f;
+    [SerializeField] float jumpImpulse = 5f;
+    [SerializeField] float gravity = -19.62f;
 
     [SerializeField] float turnSmoothTime = 0.1f;
     float smoothTurnVelocity;
 
-    [SerializeField] float gravity = -19.62f;
-    public Vector3 velocity;
-
     [SerializeField] Transform groundCheck;
-    [SerializeField] LayerMask groundMask;
+    [SerializeField] LayerMask groundLayer;
     [SerializeField] float groundDistance = 0.1f;
     bool isGrounded;
 
-    [SerializeField] float jumpImpulse = 1f;
-
+    public Vector3 velocity;
     private void Start()
     {
         Cursor.visible = false;
     }
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        if (!isInGame) {
+            return;
+        }
+
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
@@ -38,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         float verticalInput = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
-        if(direction.magnitude >= 0.1f)
+        if (direction.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothTurnVelocity, turnSmoothTime);
@@ -54,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            velocity.y = Mathf.Sqrt(jumpImpulse * -2f * gravity);
+            velocity.y = jumpImpulse;
         }
     }
 }
