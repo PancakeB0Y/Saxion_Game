@@ -155,13 +155,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90c832a44b42ce04a918592b1a3b7db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spherePrefab: {fileID: 8070876651380824180, guid: f675d61a67597c24fbd104a118eb1adb, type: 3}
-  sphereLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  goodSphere: {fileID: 8070876651380824180, guid: c8f13dfb15651674dbc6715099741c93, type: 3}
+  badSphere: {fileID: 8070876651380824180, guid: f675d61a67597c24fbd104a118eb1adb, type: 3}
   distanceFromCam: 2
-  speed: 1
-  sphereCount: 20
+  maxSphereCount: 20
   spawnRate: 0.5
 --- !u!1 &2297163695296416689
 GameObject:

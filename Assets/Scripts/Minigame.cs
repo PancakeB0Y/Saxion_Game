@@ -6,11 +6,14 @@ public class Minigame : MonoBehaviour
 {
     public static bool isInMinigame = false;
 
+    [SerializeField] Camera mainCamera;
     Camera curCamera;
 
-    [SerializeField] GameObject spherePrefab;
-    [SerializeField] float sphereDistanceFromCam = 2f;
-    [SerializeField] float sphereSpeed = 1f;
+    [SerializeField] GameObject goodSphere;
+    [SerializeField] GameObject badSphere;
+    [SerializeField] float distanceFromCam = 2f;
+    int goodSpheresDestroyed = 0;
+    int badSpheresDestroyed = 0;
 
     ArrayList spheres = new ArrayList();
     [SerializeField] int maxSphereCount = 20;
@@ -34,30 +37,40 @@ public class Minigame : MonoBehaviour
             }
             return;
         }
+        if (spheres.Count >= maxSphereCount)
+        {
+            if (areSpheresOut())
+            {
+                curCamera.enabled = false;
+                mainCamera.enabled = true;
+                Cursor.visible = !Cursor.visible;
+            }
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePos = Input.mousePosition;
             Ray ray = curCamera.ScreenPointToRay(mousePos);
 
-            if(Physics.Raycast(ray, out RaycastHit hitData, 100, 1 << spherePrefab.layer))
+            if(Physics.Raycast(ray, out RaycastHit hitData, 100, 1 << badSphere.layer))
             {
-                spheres.Remove(hitData.transform.gameObject);
-                Destroy(hitData.transform.gameObject);
+                GameObject sphereHit = hitData.transform.gameObject;
+                if (sphereHit.GetComponent<MeshRenderer>().sharedMaterial == goodSphere.GetComponent<MeshRenderer>().sharedMaterial)
+                { 
+                    goodSpheresDestroyed++;
+                }
+                else{ badSpheresDestroyed++; }
+                spheres.Remove(sphereHit);
+                Destroy(sphereHit); 
             }
         }
         
-        if (spheres.Count < maxSphereCount)
+        timeBetweenSpawns += Time.deltaTime;
+        if (timeBetweenSpawns >= spawnRate)
         {
-            timeBetweenSpawns += Time.deltaTime;
-            if (timeBetweenSpawns >= spawnRate)
-            {
-                timeBetweenSpawns = 0;
-                SpawnSphere();
-            }
-        }
-        else
-        {
-            KillSpheres();
+            timeBetweenSpawns = 0;
+            SpawnSphere();
         }
 
     }
@@ -65,12 +78,15 @@ public class Minigame : MonoBehaviour
     void SpawnSphere()
     {
         float x = Random.Range(0, 2);
+        float endX = (x == 1) ? -0.2f : 1.2f;
         float y = Random.Range(1, 10) / 10f;
+        float sphereSpeed = Random.Range(5, 11) / 10f;
 
-        Vector3 startPos = curCamera.ViewportToWorldPoint(new Vector3(x, y, curCamera.nearClipPlane + sphereDistanceFromCam));
-        Vector3 endPos = curCamera.ViewportToWorldPoint(new Vector3(1 - x, y, curCamera.nearClipPlane + sphereDistanceFromCam));
+        Vector3 startPos = curCamera.ViewportToWorldPoint(new Vector3(x, y, curCamera.nearClipPlane + distanceFromCam));
+        Vector3 endPos = curCamera.ViewportToWorldPoint(new Vector3(endX, y, curCamera.nearClipPlane + distanceFromCam));
 
-        GameObject sphere = Instantiate(spherePrefab, startPos, Quaternion.identity);
+        int whichSphere = Random.Range(0, 2);
+        GameObject sphere = Instantiate((whichSphere == 0) ? badSphere : goodSphere, startPos, Quaternion.identity);
         sphere.AddComponent<Move>();
         sphere.GetComponent<Move>().speed = sphereSpeed;
         sphere.GetComponent<Move>().endPos = endPos;
@@ -86,6 +102,20 @@ public class Minigame : MonoBehaviour
         }
         spheres.Clear();
     }
+
+    bool areSpheresOut()
+    {
+        bool allOut = true;
+        foreach (GameObject sphere in spheres)
+        {
+            if(sphere.transform.position.x != sphere.GetComponent<Move>().endPos.x)
+            {
+                allOut = false;
+            }
+        }
+        return allOut;
+    }
+
 }
 
 public class Move : MonoBehaviour
