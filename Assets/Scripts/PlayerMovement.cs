@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Minigame;
+using static CameraSwitcher;
 
 public class PlayerMovement : MonoBehaviour
 {
+    Transform mainCamera;
     [SerializeField] CharacterController controller;
-    [SerializeField] Transform cam;
 
     [SerializeField] float speed = 10f;
     [SerializeField] float jumpImpulse = 5f;
@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 velocity;
     private void Start()
     {
+        mainCamera = Camera.main.transform;
         Cursor.visible = false;
     }
     void Update()
@@ -43,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + mainCamera.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothTurnVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
