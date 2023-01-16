@@ -2,70 +2,88 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using static PlayerMovement;
 
 public class Minigame : MonoBehaviour
 {
     Camera curCamera;
     float distanceFromCam = 2f;
 
-    [SerializeField] GameObject goodSphere;
-    [SerializeField] GameObject badSphere;
+    [SerializeField] GameObject[] goodElementPrefabs;
+    [SerializeField] GameObject[] badElementPrefabs;
+    [SerializeField] LayerMask elementLayer;
 
-    [SerializeField] TextMeshProUGUI sphereCountText;
+    [SerializeField] TextMeshProUGUI elementCountText;
     [SerializeField] TextMeshProUGUI resultsText;
 
-    ArrayList goodSpheres = new ArrayList();
-    ArrayList badSpheres = new ArrayList();
-    [SerializeField] int maxGoodSpheres = 20;
-    [SerializeField] int maxBadSpheres = 20;
-    int goodSpheresSpawned = 0;
-    int badSpheresSpawned = 0;
-    int goodSpheresDestroyed = 0;
-    int badSpheresDestroyed = 0;
+    ArrayList allElements = new ArrayList();
 
-    [SerializeField] float spawnRate = 0.5f;
-    float timeBetweenSpawns;
+    int maxGoodElements;
+    int maxBadElements;
+
+    int goodElementsSpawned = 0;
+    int badElementsSpawned = 0;
+    int goodElementsDestroyed = 0;
+    int badElementsDestroyed = 0;
 
     [SerializeField] StopwatchScript stopwatchScript;
     bool isTimeOut = false;
-
     bool gameOver = false;
+    public bool isGameWon = false;
+
+    [SerializeField] float spawnRate = 0.5f;
+    float timeBetweenSpawns;
 
     void Start()
     {
         curCamera = gameObject.GetComponentInChildren<Camera>();
         timeBetweenSpawns = spawnRate;
-        sphereCountText.text = "Good Spheres: 0/" + maxGoodSpheres + "\n" + "Bad Spheres: 0/" + maxBadSpheres;
+
+        maxGoodElements = Random.Range(10, 21);
+        maxBadElements = Random.Range(10, 21);
+
+        RandomizeGameObjectArray(goodElementPrefabs);
+        RandomizeGameObjectArray(badElementPrefabs);
+
+        elementCountText.text = "Bad Elements: 0";
     }
 
     void Update()
     {
-        sphereCountText.enabled = false;
+        elementCountText.enabled = false;
         resultsText.enabled = false;
         isTimeOut = stopwatchScript.isTimeOut;
         if (isTimeOut) { gameOver = true; }
         if (gameOver)
         {
-            KillSpheres();
-            resultsText.text = "Your results \n" + "Good Spheres: " + goodSpheresDestroyed + "/" + maxGoodSpheres + "\n"
-                    + "Bad Spheres: " + badSpheresDestroyed + "/" + maxBadSpheres; ;
-            if (curCamera.enabled) { resultsText.enabled = true; }
-            return;
+            if (allElements.Count != 0)
+            {
+                DestroyAllElements();
+                resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
+                        + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements;
+                if (curCamera.enabled) { resultsText.enabled = true; }
+                if (goodElementsDestroyed <= 5 && badElementsDestroyed >= maxBadElements - 5)
+                {
+                    isGameWon = true;
+                    minigamesWon++;
+                }
+                return;
+            }   
         }
         if (!curCamera.enabled)
         {
-            KillSpheres();
-            sphereCountText.text = "Good Spheres: 0/" + maxGoodSpheres + "\n" + "Bad Spheres: 0/" + maxBadSpheres;
-            goodSpheresDestroyed = 0;
-            badSpheresDestroyed = 0;
-            goodSpheresSpawned = 0;
-            badSpheresSpawned = 0;
+            DestroyAllElements();
+            elementCountText.text = "Bad Elements: 0";
+            goodElementsDestroyed = 0;
+            badElementsDestroyed = 0;
+            goodElementsSpawned = 0;
+            badElementsSpawned = 0;
             return;
         }
-        sphereCountText.enabled = true;
-        if (goodSpheresSpawned >= maxGoodSpheres && badSpheresSpawned >= maxBadSpheres)
+        elementCountText.enabled = true;
+        if (goodElementsSpawned >= maxGoodElements && badElementsSpawned >= maxBadElements)
         {
-            if (areAllSpheresOut())
+            if (areAllElementsOut())
             {
                 resultsText.enabled = true;
                 gameOver = true;
@@ -78,21 +96,25 @@ public class Minigame : MonoBehaviour
             Vector3 mousePos = Input.mousePosition;
             Ray ray = curCamera.ScreenPointToRay(mousePos);
 
-            if(Physics.Raycast(ray, out RaycastHit hitData, 100, 1 << badSphere.layer))
+            if(Physics.Raycast(ray, out RaycastHit hitData, 100, elementLayer))
             {
-                GameObject sphereHit = hitData.transform.gameObject;
-                if (sphereHit.GetComponent<MeshRenderer>().sharedMaterial == goodSphere.GetComponent<MeshRenderer>().sharedMaterial)
-                { 
-                    goodSpheresDestroyed++;
-                    goodSpheres.Remove(sphereHit);
+                GameObject elementHit = hitData.transform.gameObject;
+                bool isElementGood = false;
+                foreach(GameObject goodElementPrefab in goodElementPrefabs)
+                {
+                    if (elementHit.GetComponent<MeshRenderer>().sharedMaterial == goodElementPrefab.GetComponent<MeshRenderer>().sharedMaterial)
+                    {
+                        goodElementsDestroyed++;
+                        isElementGood = true;
+                    }
                 }
-                else{ 
-                    badSpheresDestroyed++; 
-                    badSpheres.Remove(sphereHit); 
+                if (!isElementGood)
+                {
+                    badElementsDestroyed++;
                 }
-                sphereCountText.text = "Good Spheres: " + goodSpheresDestroyed + "/" + maxGoodSpheres + "\n"
-                    + "Bad Spheres: " + badSpheresDestroyed + "/" + maxBadSpheres;
-                Destroy(sphereHit); 
+                allElements.Remove(elementHit);
+                elementCountText.text = "Bad Elements: " + badElementsDestroyed + "\n";
+                Destroy(elementHit); 
             }
         }
         
@@ -100,77 +122,88 @@ public class Minigame : MonoBehaviour
         if (timeBetweenSpawns >= spawnRate)
         {
             timeBetweenSpawns = 0;
-            SpawnSphere();
+            SpawnElement();
         }
 
     }
 
-    void SpawnSphere()
+    void SpawnElement()
     {
-        if(goodSpheresSpawned >= maxGoodSpheres && badSpheresSpawned >= maxBadSpheres) { return; }
+        if(goodElementsSpawned >= maxGoodElements && badElementsSpawned >= maxBadElements) { return; }
         float x = Random.Range(0, 2);
         float endX = (x == 1) ? -0.1f : 1.1f;
         float y = Random.Range(1, 9) / 10f;
-        float sphereSpeed = Random.Range(7, 10) / 10f;
+        float elementSpeed = Random.Range(7, 10) / 10f;
 
         Vector3 startPos = curCamera.ViewportToWorldPoint(new Vector3(x, y, curCamera.nearClipPlane + distanceFromCam));
         Vector3 endPos = curCamera.ViewportToWorldPoint(new Vector3(endX, y, curCamera.nearClipPlane + distanceFromCam));
 
-        int whichSphere = Random.Range(0, 2);
-        if(goodSpheresSpawned >= maxGoodSpheres) { whichSphere = 1; }
-        if(badSpheresSpawned >= maxBadSpheres) { whichSphere = 0; }
-        GameObject sphere = Instantiate((whichSphere == 0) ? goodSphere : badSphere, startPos, Quaternion.identity);
-        sphere.AddComponent<Move>();
-        sphere.GetComponent<Move>().speed = sphereSpeed;
-        sphere.GetComponent<Move>().endPos = endPos;
-
-        if(whichSphere == 0)
+        GameObject prefabToSpawn;
+        int elementAffinity = Random.Range(0, 2);
+        if(goodElementsSpawned >= maxGoodElements) { elementAffinity = 1; }
+        if(badElementsSpawned >= maxBadElements) { elementAffinity = 0; }
+        if(elementAffinity == 0)
         {
-            goodSpheres.Add(sphere);
-            goodSpheresSpawned++;
+            int whichElement = Random.Range(0, goodElementPrefabs.Length - 1);
+            prefabToSpawn = goodElementPrefabs[whichElement];
+        }else
+        {
+            int whichElement = Random.Range(0, badElementPrefabs.Length - 1);
+            prefabToSpawn = badElementPrefabs[whichElement];
         }
-        else { 
-            badSpheres.Add(sphere);
-            badSpheresSpawned++;
+
+        GameObject newElement = Instantiate(prefabToSpawn, startPos, Quaternion.identity);
+        newElement.AddComponent<Move>();
+        newElement.GetComponent<Move>().speed = elementSpeed;
+        newElement.GetComponent<Move>().endPos = endPos;
+
+        if(elementAffinity == 0)
+        {
+            goodElementsSpawned++;
         }
-        
+        else {
+            badElementsSpawned++;
+        }
+        allElements.Add(newElement);
     }
 
-    void KillSpheres()
+    void DestroyAllElements()
     {
-        foreach (GameObject sphere in goodSpheres)
+        foreach (GameObject curElement in allElements)
         {
-            Destroy(sphere);
+            Destroy(curElement);
         }
-        goodSpheres.Clear();
+        allElements.Clear();
 
-        foreach (GameObject sphere in badSpheres)
-        {
-            Destroy(sphere);
-        }
-        badSpheres.Clear();
     }
 
-    bool areAllSpheresOut()
+    bool areAllElementsOut()
     {
         bool allOut = true;
-        foreach (GameObject sphere in goodSpheres)
+        foreach (GameObject curElement in allElements)
         {
-            if(sphere.transform.position.z != sphere.GetComponent<Move>().endPos.z)
+            if(curElement.transform.position.z != curElement.GetComponent<Move>().endPos.z)
             {
                 allOut = false;
             }
         }
-        foreach (GameObject sphere in badSpheres)
-        {
-            if (sphere.transform.position.z != sphere.GetComponent<Move>().endPos.z)
-            {
-                allOut = false;
-            }
-        }
+
         return allOut;
     }
 
+    void RandomizeGameObjectArray(GameObject[] array)
+    {
+        int index1;
+        int index2;
+        for (int i = 0; i < array.Length * 10; i++)
+        {
+            index1 = Random.Range(0, array.Length);
+            index2 = Random.Range(0, array.Length);
+            GameObject temp = array[index1];
+            array[index1] = array[index2];
+            array[index2] = temp;
+        }
+    }
 }
 
 public class Move : MonoBehaviour

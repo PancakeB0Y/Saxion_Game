@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static CameraSwitcher;
 
 public class StopwatchScript : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class StopwatchScript : MonoBehaviour
     }
     void Update()
     {
-        if (isTimeOut)
+        if (isTimeOut || isInMinigame)
         {
             return;
         }

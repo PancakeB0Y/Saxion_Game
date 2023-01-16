@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Billboarding.cs" />
     <Compile Include="Assets\Scripts\StopwatchScript.cs" />
+    <Compile Include="Assets\Scripts\LegendScript.cs" />
     <Compile Include="Assets\Scripts\Minigame.cs" />
   </ItemGroup>
   <ItemGroup>

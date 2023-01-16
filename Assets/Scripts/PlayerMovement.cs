@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
 
     public Vector3 velocity;
+
+    public static int minigamesWon = 0;
+    
     private void Start()
     {
         mainCamera = Camera.main.transform;
@@ -28,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+        Debug.Log(minigamesWon);
         if (isInMinigame) {
             return;
         }
