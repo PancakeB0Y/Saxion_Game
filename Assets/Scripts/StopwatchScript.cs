@@ -5,6 +5,8 @@ using static CameraSwitcher;
 
 public class StopwatchScript : MonoBehaviour
 {
+    [SerializeField] Minigame minigameScript;
+    
     [SerializeField] Sprite[] stopwatchSprites;
     int curSprite = 0;
 
@@ -34,13 +36,28 @@ public class StopwatchScript : MonoBehaviour
     }
     void Update()
     {
-        if (isTimeOut || isInMinigame)
+        if (isTimeOut)
         {
             return;
         }
 
+        if (isInMinigame)
+        {
+            if (minigameScript.isMinigameWon)
+            {
+                transform.GetComponent<SpriteRenderer>().sprite = stopwatchSprites[9];
+                isTimeOut = true;
+            }
+            return;
+        }
+
         timeBetweenSpawns += Time.deltaTime;
-        if (timeBetweenSpawns >= time)
+        if (minigameScript.minigameOver)
+        {
+            curSprite = 8;
+            isTimeOut = true;
+        }
+        else if (timeBetweenSpawns >= time)
         {
             curSprite = 8;
             isTimeOut = true;

@@ -490,6 +490,7 @@ MonoBehaviour:
   resultsText: {fileID: 3323150399121124243}
   spawnRate: 0.5
   stopwatchScript: {fileID: 8487383292083679530}
+  isGameWon: 0
 --- !u!1 &745670317182089142
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,6 +928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15122e726d5e6ff40894b6bf0a3cae90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minigameScript: {fileID: 7707803080171808267}
   stopwatchSprites:
   - {fileID: 21300000, guid: 6fab1c27a5562a0468dd9bee971fb0b7, type: 3}
   - {fileID: 21300000, guid: 3474f600f44f32142b56e77b0464f309, type: 3}
@@ -937,6 +939,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7519d1e1f89ca6c48898ca997feb1f6e, type: 3}
   - {fileID: 21300000, guid: 6384aada9a3958044b4435706eeb9f28, type: 3}
   - {fileID: 21300000, guid: 356b88eee318d8c47988bd511caad16c, type: 3}
+  - {fileID: 21300000, guid: d710dbd870024084cae5e6fbffe92877, type: 3}
   time: 20
   isTimeOut: 0
 --- !u!1 &6426396500002834709

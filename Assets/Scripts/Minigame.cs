@@ -26,13 +26,14 @@ public class Minigame : MonoBehaviour
     int goodElementsDestroyed = 0;
     int badElementsDestroyed = 0;
 
-    [SerializeField] StopwatchScript stopwatchScript;
-    bool isTimeOut = false;
-    bool gameOver = false;
-    public bool isGameWon = false;
-
     [SerializeField] float spawnRate = 0.5f;
     float timeBetweenSpawns;
+
+    [SerializeField] StopwatchScript stopwatchScript;
+    bool isTimeOut = false;
+
+    [HideInInspector] public bool minigameOver = false;
+    public bool isMinigameWon = false;
 
     void Start()
     {
@@ -53,31 +54,35 @@ public class Minigame : MonoBehaviour
         elementCountText.enabled = false;
         resultsText.enabled = false;
         isTimeOut = stopwatchScript.isTimeOut;
-        if (isTimeOut) { gameOver = true; }
-        if (gameOver)
+        if (isTimeOut) { minigameOver = true; }
+        if (minigameOver)
         {
+            if (curCamera.enabled) { resultsText.enabled = true; }
             if (allElements.Count != 0)
             {
                 DestroyAllElements();
                 resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
                         + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements;
-                if (curCamera.enabled) { resultsText.enabled = true; }
                 if (goodElementsDestroyed <= 5 && badElementsDestroyed >= maxBadElements - 5)
                 {
-                    isGameWon = true;
+                    isMinigameWon = true;
                     minigamesWon++;
                 }
                 return;
-            }   
+            }
+            
         }
         if (!curCamera.enabled)
         {
-            DestroyAllElements();
-            elementCountText.text = "Bad Elements: 0";
-            goodElementsDestroyed = 0;
-            badElementsDestroyed = 0;
-            goodElementsSpawned = 0;
-            badElementsSpawned = 0;
+            if (allElements.Count != 0)
+            {
+                DestroyAllElements();
+                elementCountText.text = "Bad Elements: 0";
+                goodElementsDestroyed = 0;
+                badElementsDestroyed = 0;
+                goodElementsSpawned = 0;
+                badElementsSpawned = 0;
+            }
             return;
         }
         elementCountText.enabled = true;
@@ -86,7 +91,7 @@ public class Minigame : MonoBehaviour
             if (areAllElementsOut())
             {
                 resultsText.enabled = true;
-                gameOver = true;
+                minigameOver = true;
                 return;
             }
         }
