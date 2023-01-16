@@ -135,9 +135,9 @@
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@12.1.8\Editor\MaterialUpgrader.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@12.1.8\Editor\Debugging\DebugWindow.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@12.1.8\Editor\Camera\CameraUI.Output.Skin.cs" />
-    <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@12.1.8\Editor\Lighting\ProbeVolume\ProbeGIBaking.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@12.1.8\Editor\Lighting\ProbeVolume\ProbeVolumeBakingProcessSettingsDrawer.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@12.1.8\Editor\Lighting\IESReader.cs" />
+    <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@12.1.8\Editor\Lighting\ProbeVolume\ProbeGIBaking.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@12.1.8\Editor\MenuManager.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@12.1.8\Editor\Gizmo\GizmoUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core@12.1.8\Editor\Lighting\LightUI.Drawers.cs" />
