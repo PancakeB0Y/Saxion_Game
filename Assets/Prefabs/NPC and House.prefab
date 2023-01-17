@@ -164,14 +164,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171767646851566239}
-  m_LocalRotation: {x: 0.46174866, y: -0, z: -0, w: 0.8870108}
-  m_LocalPosition: {x: 0, y: 3.5, z: 1.6000004}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 4, z: 4.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 624317278782424318}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 44.913, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!20 &7783287590326807346
 Camera:
   m_ObjectHideFlags: 0
@@ -343,9 +343,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 5
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &624317278255311316
 GameObject:
   m_ObjectHideFlags: 0
@@ -490,7 +490,8 @@ MonoBehaviour:
   resultsText: {fileID: 3323150399121124243}
   spawnRate: 0.5
   stopwatchScript: {fileID: 8487383292083679530}
-  isGameWon: 0
+  minigameOver: 0
+  isMinigameWon: 0
 --- !u!1 &745670317182089142
 GameObject:
   m_ObjectHideFlags: 0
