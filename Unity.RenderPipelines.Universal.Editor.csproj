@@ -200,8 +200,8 @@
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@12.1.8\Editor\ShaderGraph\AssetCallbacks\CreateLitShaderGraph.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@12.1.8\Editor\UpgradeUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@12.1.8\Editor\2D\ShapeEditor\EditorTool\ScriptablePathInspector.cs" />
-    <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@12.1.8\Editor\2D\ShapeEditor\EditablePath\BezierUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@12.1.8\Editor\Decal\CreateDecalShaderGraph.cs" />
+    <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@12.1.8\Editor\2D\ShapeEditor\EditablePath\BezierUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@12.1.8\Editor\ShaderPreprocessor.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@12.1.8\Editor\2D\ShapeEditor\GUIFramework\GenericControl.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.universal@12.1.8\Editor\Lighting\UniversalRenderPipelineLightUI.PresetInspector.cs" />

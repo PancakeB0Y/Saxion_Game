@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 7542383604120575694}
-  speed: 8
+  speed: 9
   jumpImpulse: 6
   gravity: -19.62
   turnSmoothTime: 0.1

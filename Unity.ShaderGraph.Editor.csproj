@@ -180,8 +180,8 @@
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Data\Nodes\Artistic\Normal\NormalReconstructZNode.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Data\Graphs\AbstractShaderProperty.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Drawing\Controls\Texture3DControl.cs" />
-    <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Data\Interfaces\IMayRequireTransform.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Importers\ShaderSubGraphImporterEditor.cs" />
+    <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Data\Interfaces\IMayRequireTransform.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Util\IndexSet.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Data\Nodes\Math\Advanced\ModuloNode.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Drawing\Views\Slots\UVSlotControlView.cs" />
@@ -272,8 +272,8 @@
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Generation\Enumerations\InstancingOptions.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Data\Nodes\NormalMapSpace.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Generation\TargetResources\StructFields.cs" />
-    <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Drawing\Views\ReorderableTextListView.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Generation\Processors\ShaderStringBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Drawing\Views\ReorderableTextListView.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Generation\Enumerations\ShaderModel.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Generation\ShaderGraphVfxAsset.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph@12.1.8\Editor\Drawing\Controls\ColorControl.cs" />

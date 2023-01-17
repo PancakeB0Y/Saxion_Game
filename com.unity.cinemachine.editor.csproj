@@ -62,8 +62,8 @@
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.8.9\Editor\PropertyDrawers\NoiseSettingsPropertyDrawer.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.8.9\Editor\Impulse\CinemachineCollisionImpulseSourceEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.8.9\Editor\Impulse\CinemachineImpulseListenerEditor.cs" />
-    <Compile Include="Library\PackageCache\com.unity.cinemachine@2.8.9\Editor\Editors\CinemachineColliderEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.8.9\Editor\PropertyDrawers\EmbeddedAssetPropertyDrawer.cs" />
+    <Compile Include="Library\PackageCache\com.unity.cinemachine@2.8.9\Editor\Editors\CinemachineColliderEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.8.9\Editor\Windows\CinemachineColliderPrefs.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.8.9\Editor\Editors\CinemachineConfiner2DEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.8.9\Editor\Editors\CinemachinePOVEditor.cs" />
