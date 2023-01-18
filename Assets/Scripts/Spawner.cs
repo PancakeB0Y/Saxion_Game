@@ -10,19 +10,23 @@ public class Spawner : MonoBehaviour
     Vector3[] positions;
     
     [SerializeField] Vector3[] directionVectors;
-    [SerializeField] Vector3[] oppositeDirectionVectors;
-    [SerializeField] Vector3[] perpenticularVectors;
-    [SerializeField] Vector3[] oppositePerpenticularVectors;
+    [SerializeField] Vector3[] perpendicularVectors;
+    [SerializeField] Vector3[] reversePerpendicularVectors;
 
     [SerializeField] GameObject npcAndHousePrefab;
 
     [SerializeField] float distance = 5f;
 
+    ArrayList spawnedObjectPositions;
+    [SerializeField] float minDistanceBetweenSpawns = 10f;
+
     void Start()
     {
+        //Creating an array of all GameObjects that are children of this GameObject
         initialPoints = new ArrayList(GetComponentsInChildren<Transform>());
-        initialPoints.RemoveAt(0);
-        points = new Transform[initialPoints.Count];
+        initialPoints.RemoveAt(0); //GetComponentsInChildren() also returns the parent so it is removed from the ArrayList
+        //An array is created from the ArrayList, because ArrayList isn't visualized in the Unity ispector
+        points = new Transform[initialPoints.Count]; 
         int i = 0;
         foreach(Transform cur in initialPoints)
         {
@@ -30,21 +34,20 @@ public class Spawner : MonoBehaviour
             i++;
         }
 
+        //Creating an array with all the positions of the GameObjects
         positions = new Vector3[points.Length];
         for(i = 0; i < points.Length; i++)
         {
             positions[i] = points[i].position;
         }
 
+        //Creating an array with vectors that point from one GameObject to the next
         directionVectors = new Vector3[points.Length];
-        for(i = 0; i < points.Length - 1; i++)
+        for(i = 0; i < points.Length; i++)
         {
-            directionVectors[i] = createVectorFromTwoPoints(points[i].position, points[i + 1].position);
-        }
-        oppositeDirectionVectors = new Vector3[directionVectors.Length];
-        for (i = 0; i < directionVectors.Length; i++)
-        {
-            oppositeDirectionVectors[i] = reverseVector(directionVectors[i]);
+            int k = (i < points.Length - i) ? i : (i - 1);
+            Debug.Log(k);
+            directionVectors[i] = createVectorFromTwoPoints(points[k].position, points[k + 1].position);
         }
 
         /*
@@ -60,46 +63,78 @@ public class Spawner : MonoBehaviour
                 for closest
         }
          * */
-        perpenticularVectors = new Vector3[directionVectors.Length];
-        for (i = 0; i < points.Length; i++)
+
+        //Creating an array with the perpendicular vectors of the direction vectors 
+        perpendicularVectors = new Vector3[directionVectors.Length];
+        for (i = 0; i < directionVectors.Length; i++)
         {
-            int j = (i < points.Length - 1) ? i : (i - 1);
-            perpenticularVectors[j] = getPerpendicularVector(directionVectors[j]);
+            perpendicularVectors[i] = getPerpendicularVector(directionVectors[i]);
         }
-        oppositePerpenticularVectors = new Vector3[directionVectors.Length];
-        for (i = 0; i < points.Length; i++)
+
+        //Creating an array with the reverse of the perpendicular vectors
+        reversePerpendicularVectors = new Vector3[directionVectors.Length];
+        for (i = 0; i < directionVectors.Length; i++)
         {
-            int j = (i < points.Length - 1) ? i : (i - 1);
-            oppositePerpenticularVectors[j] = getPerpendicularVector(oppositeDirectionVectors[j]);
+            reversePerpendicularVectors[i] = reverseVector(perpendicularVectors[i]);
         }
+
+        /*
         for (i = 0; i < points.Length; i++)
         {
             int j = (i < points.Length - 1) ? i : (i - 1);
             int whichVector = UnityEngine.Random.Range(0, 2);
-            Vector3 curVector = whichVector == 0 ? perpenticularVectors[j] : oppositePerpenticularVectors[j];
+            Vector3 curVector = whichVector == 0 ? perpendicularVectors[j] : reversePerpendicularVectors[j];
             float len = curVector.magnitude;
             double angle = (curVector.z > 0) ? Math.Acos(curVector.x / len) : (2 * Math.PI - Math.Acos(curVector.x / curVector.magnitude));
             angle = -angle;
             GameObject newElement = Instantiate(npcAndHousePrefab, points[i].position + curVector * distance, Quaternion.AngleAxis((float)((angle * 180 / Math.PI) - 90), new Vector3(0, 1, 0)));
         }
-
-        float lenghtOfPoints = getLengthBetweenPoints(positions);
-        for(i = 0; i < points.Length; i++)
+        */
+        
+        float lengthOfPoints = getLengthBetweenPoints(positions);
+        Vector3[] newVectorArray;
+        for (i = 0; i < 100; i++)
         {
-            for (int j = 0; j < 100; j++)
+            float randLength = UnityEngine.Random.Range(0, lengthOfPoints + 1);
+            for(int j = 0; j < positions.Length; j++)
             {
-                float randLength = UnityEngine.Random.Range(0, lenghtOfPoints + 1);
-                for(int k = 0; k < points.Length - 1; k++)
+                int k = (j < positions.Length - 1) ? j : (j - 1);
+                newVectorArray = new Vector3[] { positions[k], positions[k + 1] };
+                float curLength = getLengthBetweenPoints(newVectorArray);
+                if(randLength > curLength)
                 {
-                    Vector3[] newVector = new Vector3[] { positions[k], positions[k + 1] };
-                    float curLength = getLengthBetweenPoints(newVector)
-                    if(lenghtOfPoints > curLength)
+                    randLength -= curLength;
+                }
+                else
+                {
+                    Vector3 curDirectionVector = directionVectors[k] * randLength;
+                    Vector3 newSpawnPos = positions[j] + curDirectionVector;
+                    bool isCloseEnough = true;
+                    foreach(Vector3 curSpawnedObjectPos in spawnedObjectPositions)
                     {
-                        lenghtOfPoints -= curLength;
+                        newVectorArray = new Vector3[] { newSpawnPos, curSpawnedObjectPos };
+                        float newDistance = getLengthBetweenPoints(newVectorArray);
+                        if(newDistance < minDistanceBetweenSpawns)
+                        {
+                            isCloseEnough = false;
+                        }
                     }
+                    if (isCloseEnough)
+                    {
+                        spawnedObjectPositions.Add(newSpawnPos);
+                        int whichVector = UnityEngine.Random.Range(0, 2);
+                        Vector3 curVector = whichVector == 0 ? perpendicularVectors[k] : reversePerpendicularVectors[k];
+                        float len = curVector.magnitude;
+                        double angle = (curVector.z > 0) ? Math.Acos(curVector.x / len) : (2 * Math.PI - Math.Acos(curVector.x / curVector.magnitude));
+                        angle = -angle;
+                        Instantiate(npcAndHousePrefab, newSpawnPos + curVector * distance, Quaternion.AngleAxis((float)((angle * 180 / Math.PI) - 90), new Vector3(0, 1, 0)));
+                    }
+                    else { break; }
                 }
             }
         }
+        
+        
     }
 
     
