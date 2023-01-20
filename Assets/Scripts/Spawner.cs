@@ -63,19 +63,21 @@ public class Spawner : MonoBehaviour
             reversePerpendicularVectors[i] = reverseVector(perpendicularVectors[i]);
         }
 
+        //Algorithm that creates GameObject at random positions along the direction vectors
         spawnedObjectPositions = new Vector3[spawnAmount];
         int spawnedAmount = 0;
         float lengthOfPoints = getLengthBetweenPoints(positions);
         Vector3[] newVectorArray;
-        for (i = 0; i < spawnAmount * 20; i++)
+        for (i = 0; i < spawnAmount * 40; i++)
         {
-            float randLength = UnityEngine.Random.Range(0, lengthOfPoints + 1);
+            if (spawnedAmount >= spawnAmount) { break; }
+            float randLength = UnityEngine.Random.Range(0, lengthOfPoints);
             for(int j = 0; j < positions.Length; j++)
             {
                 int k = (j < positions.Length - 1) ? j : (j - 1);
                 newVectorArray = new Vector3[] { positions[k], positions[k + 1] };
                 float curLength = getLengthBetweenPoints(newVectorArray);
-                if(randLength > curLength)
+                if((randLength > curLength) && (j < positions.Length - 1))
                 {
                     randLength -= curLength;
                 }
@@ -83,14 +85,19 @@ public class Spawner : MonoBehaviour
                 {
                     Vector3 curDirectionVector = directionVectors[k] * randLength;
                     Vector3 newSpawnPos = positions[j] + curDirectionVector;
+
+                    int whichVector = UnityEngine.Random.Range(0, 2);
+                    Vector3 curVector = whichVector == 0 ? perpendicularVectors[k] : reversePerpendicularVectors[k];
+                    newSpawnPos = newSpawnPos + curVector * distanceFromPoint;
                     bool isCloseEnough = true;
-                    for(int m = 0; m < spawnAmount; m++)
+                    for(int m = 0; m < spawnedAmount; m++)
                     {
                         newVectorArray = new Vector3[] { newSpawnPos, spawnedObjectPositions[m] };
-                        float newDistance = getLengthBetweenPoints(newVectorArray);
+                        float newDistance = getLengthBetweenPoints(newVectorArray);                    
                         if(newDistance < minDistanceBetweenSpawns)
                         {
                             isCloseEnough = false;
+                            break;
                         }
                     }
                     if (!isCloseEnough) { break; }
@@ -99,13 +106,11 @@ public class Spawner : MonoBehaviour
                     spawnedObjectPositions[spawnedAmount] = (newSpawnPos);
                     spawnedAmount++;
 
-                    int whichVector = UnityEngine.Random.Range(0, 2);
-                    Vector3 curVector = whichVector == 0 ? perpendicularVectors[k] : reversePerpendicularVectors[k];
                     float len = curVector.magnitude;
                     double angle = (curVector.z > 0) ? Math.Acos(curVector.x / len) : (2 * Math.PI - Math.Acos(curVector.x / curVector.magnitude));
                     angle = -angle;
-                    Instantiate(npcAndHousePrefab, newSpawnPos + curVector * distanceFromPoint, Quaternion.AngleAxis((float)((angle * 180 / Math.PI) - 90), new Vector3(0, 1, 0)));
-
+                    Instantiate(npcAndHousePrefab, newSpawnPos, Quaternion.AngleAxis((float)((angle * 180 / Math.PI) - 90), new Vector3(0, 1, 0)));
+                    break;
                 }
             }
         }
@@ -147,7 +152,7 @@ public class Spawner : MonoBehaviour
         float distance = 0f;
         for(int i = 0; i < vectors.Length - 1; i++)
         {
-            distance += (float)Math.Sqrt((vectors[i+1].x - vectors[i].x) * (vectors[i + 1].x - vectors[i].x) + (vectors[i + 1].y - vectors[i].y) * (vectors[i + 1].y - vectors[i].y));
+            distance += (float)Math.Sqrt((vectors[i+1].x - vectors[i].x) * (vectors[i + 1].x - vectors[i].x) + (vectors[i + 1].z - vectors[i].z) * (vectors[i + 1].z - vectors[i].z));
         }
 
         return distance;
