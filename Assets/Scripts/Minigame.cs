@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using static PlayerMovement;
+using static FinishGame;
 
 public class Minigame : MonoBehaviour
 {
@@ -32,7 +32,7 @@ public class Minigame : MonoBehaviour
     [SerializeField] StopwatchScript stopwatchScript;
     bool isTimeOut = false;
 
-    [HideInInspector] public bool minigameOver = false;
+    [HideInInspector] public bool isMinigameOver = false;
     public bool isMinigameWon = false;
 
     void Start()
@@ -47,65 +47,37 @@ public class Minigame : MonoBehaviour
         RandomizeGameObjectArray(badElementPrefabs);
 
         elementCountText.text = "Bad Elements: 0";
+        minigamesCount++;
+    }
+
+    void FinishMinigame()
+    {
+        if (!isMinigameOver) {
+            isMinigameOver = true;
+            DestroyAllElements();
+            resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
+                    + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements;
+            if (goodElementsDestroyed <= 5 && badElementsDestroyed >= maxBadElements - 5)
+            {
+                isMinigameWon = true;
+                minigamesWon++;
+            }
+            minigamesOverCount++;
+        }
     }
 
     void Update()
     {
-        elementCountText.enabled = false;
-        resultsText.enabled = false;
-        isTimeOut = stopwatchScript.isTimeOut;
-        if (isTimeOut) { minigameOver = true; }
-        if (minigameOver)
-        {
-            if (curCamera.enabled) { resultsText.enabled = true; }
-            if (allElements.Count != 0)
-            {
-                DestroyAllElements();
-                resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
-                        + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements;
-                if (goodElementsDestroyed <= 5 && badElementsDestroyed >= maxBadElements - 5)
-                {
-                    isMinigameWon = true;
-                    minigamesWon++;
-                }
-                return;
-            }
-            
-        }
-        if (!curCamera.enabled)
-        {
-            if (allElements.Count != 0)
-            {
-                DestroyAllElements();
-                elementCountText.text = "Bad Elements: 0";
-                goodElementsDestroyed = 0;
-                badElementsDestroyed = 0;
-                goodElementsSpawned = 0;
-                badElementsSpawned = 0;
-            }
-            return;
-        }
-        elementCountText.enabled = true;
-        if (goodElementsSpawned >= maxGoodElements && badElementsSpawned >= maxBadElements)
-        {
-            if (areAllElementsOut())
-            {
-                resultsText.enabled = true;
-                minigameOver = true;
-                return;
-            }
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePos = Input.mousePosition;
             Ray ray = curCamera.ScreenPointToRay(mousePos);
 
-            if(Physics.Raycast(ray, out RaycastHit hitData, 100, elementLayer))
+            if (Physics.Raycast(ray, out RaycastHit hitData, 100, elementLayer))
             {
                 GameObject elementHit = hitData.transform.gameObject;
                 bool isElementGood = false;
-                foreach(GameObject goodElementPrefab in goodElementPrefabs)
+                foreach (GameObject goodElementPrefab in goodElementPrefabs)
                 {
                     if (elementHit.GetComponent<MeshRenderer>().sharedMaterial == goodElementPrefab.GetComponent<MeshRenderer>().sharedMaterial)
                     {
@@ -119,17 +91,46 @@ public class Minigame : MonoBehaviour
                 }
                 allElements.Remove(elementHit);
                 elementCountText.text = "Bad Elements: " + badElementsDestroyed + "\n";
-                Destroy(elementHit); 
+                Destroy(elementHit);
             }
         }
-        
-        timeBetweenSpawns += Time.deltaTime;
-        if (timeBetweenSpawns >= spawnRate)
+
+        isTimeOut = stopwatchScript.isTimeOut;
+        if (isTimeOut) FinishMinigame();
+
+        if (goodElementsSpawned >= maxGoodElements && badElementsSpawned >= maxBadElements)
         {
-            timeBetweenSpawns = 0;
-            SpawnElement();
+            if (areAllElementsOut())
+            {
+                FinishMinigame();
+            }
         }
 
+        if(!isMinigameOver)
+        {
+            timeBetweenSpawns += Time.deltaTime;
+            if (timeBetweenSpawns >= spawnRate)
+            {
+                timeBetweenSpawns = 0;
+                SpawnElement();
+            }
+        }
+
+        elementCountText.enabled = !isMinigameOver && curCamera.enabled;
+        resultsText.enabled = isMinigameOver && curCamera.enabled;
+
+        if (!curCamera.enabled)
+        {
+            if (allElements.Count != 0)
+            {
+                DestroyAllElements();
+                elementCountText.text = "Bad Elements: 0";
+                goodElementsDestroyed = 0;
+                badElementsDestroyed = 0;
+                goodElementsSpawned = 0;
+                badElementsSpawned = 0;
+            }
+        }
     }
 
     void SpawnElement()

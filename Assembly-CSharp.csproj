@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\StopwatchScript.cs" />
     <Compile Include="Assets\Scripts\LegendScript.cs" />
     <Compile Include="Assets\Scripts\Minigame.cs" />
+    <Compile Include="Assets\Scripts\FinishGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

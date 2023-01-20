@@ -21,8 +21,6 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
 
     public Vector3 velocity;
-
-    public static int minigamesWon = 0;
     
     private void Start()
     {

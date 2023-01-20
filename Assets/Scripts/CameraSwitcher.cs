@@ -15,14 +15,7 @@ public class CameraSwitcher : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        allCameras = FindObjectsOfType<Camera>(true);
-        foreach(Camera curCam in allCameras)
-        {
-            if(curCam.tag == "NPC Camera")
-            {
-                cameras.Add(curCam);
-            }
-        }
+        StartCoroutine("findAllCameras");
     }
 
     void Update()
@@ -61,5 +54,19 @@ public class CameraSwitcher : MonoBehaviour
         mainCamera.enabled = !mainCamera.enabled;
         closestCam.enabled = !closestCam.enabled;
         Cursor.visible = !Cursor.visible;
+    }
+
+    IEnumerator findAllCameras()
+    {
+        yield return new WaitForSecondsRealtime(1);
+
+        allCameras = FindObjectsOfType<Camera>(true);
+        foreach (Camera curCam in allCameras)
+        {
+            if (curCam.tag == "NPC Camera")
+            {
+                cameras.Add(curCam);
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static CameraSwitcher;
+using static FinishGame;
 
 public class StopwatchScript : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class StopwatchScript : MonoBehaviour
     
     [SerializeField] Sprite[] stopwatchSprites;
     int curSprite = 0;
+
+    GameObject player;
 
     [SerializeField] float time = 20f;
     float timeBetweenSpawns = 0f;
@@ -25,6 +28,9 @@ public class StopwatchScript : MonoBehaviour
     private void Start()
     {
         transform.GetComponent<SpriteRenderer>().sprite = stopwatchSprites[0];
+
+        player = GameObject.Find("Player");
+        time = Vector3.Distance(transform.position, player.transform.position) * 0.1f;
 
         oneEight = time / 8;
         twoEights = oneEight * 2;
@@ -52,10 +58,11 @@ public class StopwatchScript : MonoBehaviour
         }
 
         timeBetweenSpawns += Time.deltaTime;
-        if (minigameScript.minigameOver)
+        if (minigameScript.isMinigameOver)
         {
             curSprite = 8;
             isTimeOut = true;
+            minigamesOverCount++;
         }
         else if (timeBetweenSpawns >= time)
         {
