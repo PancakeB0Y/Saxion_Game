@@ -490,7 +490,7 @@ MonoBehaviour:
   resultsText: {fileID: 3323150399121124243}
   spawnRate: 0.5
   stopwatchScript: {fileID: 8487383292083679530}
-  minigameOver: 0
+  isMinigameOver: 0
   isMinigameWon: 0
 --- !u!1 &745670317182089142
 GameObject:
@@ -714,7 +714,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 14.3515, y: 6.522}
-  m_SizeDelta: {x: 500, y: 280}
+  m_SizeDelta: {x: 713.8698, y: 495.698}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2311522009179678917
 CanvasRenderer:
@@ -746,9 +746,13 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Your results
 
+    Bad Elements: 20/20
+
     Good Elements: 20/20
 
-    Bad Elements: 20/20
+
+    <b>You
+    cleaned the water!
 
 '
   m_isRightToLeft: 0

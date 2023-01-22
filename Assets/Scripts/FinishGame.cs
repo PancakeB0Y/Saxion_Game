@@ -13,7 +13,7 @@ public class FinishGame : MonoBehaviour
     {
         if(minigamesCount > 0 && minigamesOverCount >= minigamesCount)
         {
-            SceneManager.LoadScene(6);
+            SceneManager.LoadScene(4);
         }
     }
 }

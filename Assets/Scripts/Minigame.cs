@@ -55,12 +55,27 @@ public class Minigame : MonoBehaviour
         if (!isMinigameOver) {
             isMinigameOver = true;
             DestroyAllElements();
-            resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
-                    + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements;
-            if (goodElementsDestroyed <= 5 && badElementsDestroyed >= maxBadElements - 5)
+            if (goodElementsDestroyed <= 3 && badElementsDestroyed >= maxBadElements - 3)
             {
                 isMinigameWon = true;
                 minigamesWon++;
+                resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
+                    + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You cleaned the water!</b>";
+            }else if(goodElementsDestroyed <= 3 && badElementsDestroyed < maxBadElements - 3)
+            {
+                resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
+                    + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You didn't clear the water well enough!</b>";
+            }
+            else if (goodElementsDestroyed > 3 && badElementsDestroyed >= maxBadElements - 3)
+            {
+                resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
+                    + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You wasted too much water!</b>";
+            }
+            else
+            {
+                resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
+                    + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You wasted too much water!"
+                    + "\n You didn't clear the water well enough!</b>";
             }
             minigamesOverCount++;
         }

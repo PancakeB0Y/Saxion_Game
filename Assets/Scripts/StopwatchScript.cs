@@ -30,7 +30,7 @@ public class StopwatchScript : MonoBehaviour
         transform.GetComponent<SpriteRenderer>().sprite = stopwatchSprites[0];
 
         player = GameObject.Find("Player");
-        time = Vector3.Distance(transform.position, player.transform.position) * 0.1f;
+        time = Vector3.Distance(transform.position, player.transform.position) * 1.5f;
 
         oneEight = time / 8;
         twoEights = oneEight * 2;

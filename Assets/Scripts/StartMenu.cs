@@ -9,7 +9,7 @@ public class StartMenu : MonoBehaviour
 
     private void Start()
     {
-        whichPreset = Random.Range(1, 6);
+        whichPreset = Random.Range(1, 4);
     }
     public void StartGame()
     {
