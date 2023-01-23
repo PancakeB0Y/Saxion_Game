@@ -21,7 +21,7 @@ public class RotateToTarget : MonoBehaviour
         if(Physics.CheckSphere(transform.position, lockOnRange, targetLayer))
         {
             Vector3 direction = (target.position - transform.position).normalized;
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + 90;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smoothTurnVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
