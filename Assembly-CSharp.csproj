@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\CameraSwitcher.cs" />
     <Compile Include="Assets\Scripts\VillagersHelped.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
+    <Compile Include="Assets\Scripts\RandomizeTrees.cs" />
     <Compile Include="Assets\Scripts\RotateToTarget.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Billboarding.cs" />
