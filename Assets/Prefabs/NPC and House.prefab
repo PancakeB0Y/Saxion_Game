@@ -785,19 +785,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 995746811648561116, guid: ec1302ee9f2d01941ad731aa7efc5ab7, type: 3}
       propertyPath: m_Size.x
-      value: 5
+      value: 5.3745875
       objectReference: {fileID: 0}
     - target: {fileID: 995746811648561116, guid: ec1302ee9f2d01941ad731aa7efc5ab7, type: 3}
       propertyPath: m_Size.y
-      value: 5
+      value: 5.6462703
       objectReference: {fileID: 0}
     - target: {fileID: 995746811648561116, guid: ec1302ee9f2d01941ad731aa7efc5ab7, type: 3}
       propertyPath: m_Size.z
-      value: 5
+      value: 5.8545203
+      objectReference: {fileID: 0}
+    - target: {fileID: 995746811648561116, guid: ec1302ee9f2d01941ad731aa7efc5ab7, type: 3}
+      propertyPath: m_Center.x
+      value: -0.05700326
       objectReference: {fileID: 0}
     - target: {fileID: 995746811648561116, guid: ec1302ee9f2d01941ad731aa7efc5ab7, type: 3}
       propertyPath: m_Center.y
-      value: 2
+      value: 2.6335242
+      objectReference: {fileID: 0}
+    - target: {fileID: 995746811648561116, guid: ec1302ee9f2d01941ad731aa7efc5ab7, type: 3}
+      propertyPath: m_Center.z
+      value: -0.014733076
       objectReference: {fileID: 0}
     - target: {fileID: 5747818038549536011, guid: ec1302ee9f2d01941ad731aa7efc5ab7, type: 3}
       propertyPath: minigameScript
