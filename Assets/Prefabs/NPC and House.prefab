@@ -803,6 +803,14 @@ PrefabInstance:
       propertyPath: minigameScript
       value: 
       objectReference: {fileID: 7707803080171808267}
+    - target: {fileID: 5747818038549536011, guid: ec1302ee9f2d01941ad731aa7efc5ab7, type: 3}
+      propertyPath: stopwatchSprites.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747818038549536011, guid: ec1302ee9f2d01941ad731aa7efc5ab7, type: 3}
+      propertyPath: stopwatchSprites.Array.data[9]
+      value: 
+      objectReference: {fileID: 21300000, guid: d710dbd870024084cae5e6fbffe92877, type: 3}
     - target: {fileID: 7354062817442150560, guid: ec1302ee9f2d01941ad731aa7efc5ab7, type: 3}
       propertyPath: m_RootOrder
       value: 1

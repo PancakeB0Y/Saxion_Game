@@ -11,6 +11,7 @@ public class FinishGame : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("Minigames Count: " + minigamesCount + " MinigamesOverCount: " + minigamesOverCount);
         if(minigamesCount > 0 && minigamesOverCount >= minigamesCount)
         {
             SceneManager.LoadScene(4);
