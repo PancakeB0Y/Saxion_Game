@@ -11,6 +11,7 @@ public class Minigame : MonoBehaviour
 
     [SerializeField] GameObject[] goodElementPrefabs;
     [SerializeField] GameObject[] badElementPrefabs;
+    GameObject fishPrefab;
     [SerializeField] LayerMask elementLayer;
 
     [SerializeField] TextMeshProUGUI elementCountText;
@@ -43,6 +44,7 @@ public class Minigame : MonoBehaviour
         maxGoodElements = Random.Range(10, 21);
         maxBadElements = Random.Range(10, 21);
 
+        fishPrefab = goodElementPrefabs[2];
         RandomizeGameObjectArray(goodElementPrefabs);
         RandomizeGameObjectArray(badElementPrefabs);
 
@@ -64,7 +66,7 @@ public class Minigame : MonoBehaviour
             }else if(goodElementsDestroyed <= 3 && badElementsDestroyed < maxBadElements - 3)
             {
                 resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
-                    + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You didn't clear the water well enough!</b>";
+                    + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You didn't clean the water well enough!</b>";
             }
             else if (goodElementsDestroyed > 3 && badElementsDestroyed >= maxBadElements - 3)
             {
@@ -75,7 +77,7 @@ public class Minigame : MonoBehaviour
             {
                 resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
                     + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You wasted too much water!"
-                    + "\n You didn't clear the water well enough!</b>";
+                    + "\n You didn't clean the water well enough!</b>";
             }
             minigamesOverCount++;
         }
@@ -94,7 +96,7 @@ public class Minigame : MonoBehaviour
                 bool isElementGood = false;
                 foreach (GameObject goodElementPrefab in goodElementPrefabs)
                 {
-                    if (elementHit.GetComponent<MeshRenderer>().sharedMaterial == goodElementPrefab.GetComponent<MeshRenderer>().sharedMaterial)
+                    if (elementHit.GetComponent<SpriteRenderer>().sprite == goodElementPrefab.GetComponent<SpriteRenderer>().sprite)
                     {
                         goodElementsDestroyed++;
                         isElementGood = true;
@@ -173,7 +175,16 @@ public class Minigame : MonoBehaviour
             prefabToSpawn = badElementPrefabs[whichElement];
         }
 
-        GameObject newElement = Instantiate(prefabToSpawn, startPos, Quaternion.identity);
+        GameObject newElement = null;
+        if (prefabToSpawn.GetComponent<SpriteRenderer>().sprite == fishPrefab.GetComponent<SpriteRenderer>().sprite && x == 1)
+        {
+              newElement = Instantiate(prefabToSpawn, startPos, Quaternion.Euler(-90f, -90f, 180f));
+        }
+        else
+        {
+            newElement = Instantiate(prefabToSpawn, startPos, Quaternion.Euler(90f, -90f, 0f));
+        }
+
         newElement.AddComponent<Move>();
         newElement.GetComponent<Move>().speed = elementSpeed;
         newElement.GetComponent<Move>().endPos = endPos;

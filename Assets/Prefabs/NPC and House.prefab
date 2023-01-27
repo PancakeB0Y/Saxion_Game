@@ -295,13 +295,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goodElementPrefabs:
-  - {fileID: 8070876651380824180, guid: c8f13dfb15651674dbc6715099741c93, type: 3}
-  - {fileID: 8070876651380824180, guid: ce390251a085f18479a231764a7fef3e, type: 3}
-  - {fileID: 8070876651380824180, guid: bc29855423b7fd147b1c9e97c564e28b, type: 3}
+  - {fileID: 2057430418769756679, guid: 89e1055ce31344248bf944a49fb5c1a3, type: 3}
+  - {fileID: 2057430418769756679, guid: 9f5cc894dbd13de46a83a479cb6f3a60, type: 3}
+  - {fileID: 2057430418769756679, guid: 8e6a04b8ad9c9ee41ae144e460e5ff57, type: 3}
   badElementPrefabs:
-  - {fileID: 8070876651380824180, guid: f675d61a67597c24fbd104a118eb1adb, type: 3}
-  - {fileID: 8070876651380824180, guid: f118fcc24df229c4483b8fe4129cf771, type: 3}
-  - {fileID: 8070876651380824180, guid: b5b6c4dd033b69f4197de785ef5a1cfe, type: 3}
+  - {fileID: 2057430418769756679, guid: c36501831ce616e4699da79d325dfc5e, type: 3}
+  - {fileID: 2057430418769756679, guid: f6c785c96b11fee458dbaa5633147561, type: 3}
+  - {fileID: 2057430418769756679, guid: e4ebc150383e11440a62febaefab1487, type: 3}
   elementLayer:
     serializedVersion: 2
     m_Bits: 256
