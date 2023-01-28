@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0, g: 0.6784314, b: 1, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.0065
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -4125,7 +4125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5923873470829029686, guid: fb6db92fa8f3c9b459a5068ad8a9eede, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.09492866
+      value: 0.09492865
       objectReference: {fileID: 0}
     - target: {fileID: 5923873470829029686, guid: fb6db92fa8f3c9b459a5068ad8a9eede, type: 3}
       propertyPath: m_LocalRotation.y
@@ -7564,16 +7564,16 @@ Transform:
   - {fileID: 1023659182}
   - {fileID: 793617645}
   - {fileID: 444924322}
-  - {fileID: 2099738929}
+  - {fileID: 361822618}
   - {fileID: 782466007}
   - {fileID: 1672576471}
   - {fileID: 2074860741}
   - {fileID: 1055964933}
   - {fileID: 523226909}
-  - {fileID: 361822618}
   - {fileID: 1041388373}
   - {fileID: 1855349062}
   - {fileID: 48529182}
+  - {fileID: 2099738929}
   - {fileID: 420031401}
   - {fileID: 629726475}
   - {fileID: 1423668414}
@@ -7588,7 +7588,6 @@ Transform:
   - {fileID: 490883636}
   - {fileID: 1569249483}
   - {fileID: 692167703}
-  - {fileID: 1983896748}
   - {fileID: 1725225932}
   - {fileID: 840484017}
   - {fileID: 1054617534}
@@ -7597,6 +7596,7 @@ Transform:
   - {fileID: 1903146227}
   - {fileID: 1599280831}
   - {fileID: 31513073}
+  - {fileID: 1983896748}
   - {fileID: 151045793}
   - {fileID: 1552827278}
   - {fileID: 662647361}
@@ -13016,7 +13016,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2032564194}
-  m_LocalRotation: {x: 0.094928674, y: -0.40837568, z: 0.04274824, w: 0.9068575}
+  m_LocalRotation: {x: 0.094928674, y: -0.40837568, z: 0.042748235, w: 0.9068575}
   m_LocalPosition: {x: -5.5072417, y: 2.7, z: -3.9768229}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
