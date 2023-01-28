@@ -298,10 +298,14 @@ MonoBehaviour:
   - {fileID: 2057430418769756679, guid: 89e1055ce31344248bf944a49fb5c1a3, type: 3}
   - {fileID: 2057430418769756679, guid: 9f5cc894dbd13de46a83a479cb6f3a60, type: 3}
   - {fileID: 2057430418769756679, guid: 8e6a04b8ad9c9ee41ae144e460e5ff57, type: 3}
+  - {fileID: 2057430418769756679, guid: a1d6202ad6de69549b467d51f22f60ff, type: 3}
+  - {fileID: 2057430418769756679, guid: a81624b6dba4c93449767c1f18af6eec, type: 3}
   badElementPrefabs:
   - {fileID: 2057430418769756679, guid: c36501831ce616e4699da79d325dfc5e, type: 3}
   - {fileID: 2057430418769756679, guid: f6c785c96b11fee458dbaa5633147561, type: 3}
   - {fileID: 2057430418769756679, guid: e4ebc150383e11440a62febaefab1487, type: 3}
+  - {fileID: 2057430418769756679, guid: 00914286ee3882a46bcd9c7ddefeb453, type: 3}
+  - {fileID: 2057430418769756679, guid: 658183834c5c8aa40897b7145c6a9974, type: 3}
   elementLayer:
     serializedVersion: 2
     m_Bits: 256

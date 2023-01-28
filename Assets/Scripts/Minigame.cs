@@ -11,7 +11,6 @@ public class Minigame : MonoBehaviour
 
     [SerializeField] GameObject[] goodElementPrefabs;
     [SerializeField] GameObject[] badElementPrefabs;
-    GameObject fishPrefab;
     [SerializeField] LayerMask elementLayer;
 
     [SerializeField] TextMeshProUGUI elementCountText;
@@ -44,11 +43,10 @@ public class Minigame : MonoBehaviour
         maxGoodElements = Random.Range(10, 21);
         maxBadElements = Random.Range(10, 21);
 
-        fishPrefab = goodElementPrefabs[2];
         RandomizeGameObjectArray(goodElementPrefabs);
         RandomizeGameObjectArray(badElementPrefabs);
 
-        elementCountText.text = "Bad Elements: 0";
+        elementCountText.text = "Pollutants: 0";
         minigamesCount++;
     }
 
@@ -61,21 +59,21 @@ public class Minigame : MonoBehaviour
             {
                 isMinigameWon = true;
                 minigamesWon++;
-                resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
+                resultsText.text = "Your results \n" + "Pollutants: " + badElementsDestroyed + "/" + maxBadElements + "\n"
                     + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You cleaned the water!</b>";
             }else if(goodElementsDestroyed <= 3 && badElementsDestroyed < maxBadElements - 3)
             {
-                resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
+                resultsText.text = "Your results \n" + "Pollutants: " + badElementsDestroyed + "/" + maxBadElements + "\n"
                     + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You didn't clean the water well enough!</b>";
             }
             else if (goodElementsDestroyed > 3 && badElementsDestroyed >= maxBadElements - 3)
             {
-                resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
+                resultsText.text = "Your results \n" + "Pollutants: " + badElementsDestroyed + "/" + maxBadElements + "\n"
                     + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You wasted too much water!</b>";
             }
             else
             {
-                resultsText.text = "Your results \n" + "Bad Elements: " + badElementsDestroyed + "/" + maxBadElements + "\n"
+                resultsText.text = "Your results \n" + "Pollutants: " + badElementsDestroyed + "/" + maxBadElements + "\n"
                     + "Good Elements: " + goodElementsDestroyed + "/" + maxGoodElements + "\n \n <b>You wasted too much water!"
                     + "\n You didn't clean the water well enough!</b>";
             }
@@ -107,7 +105,7 @@ public class Minigame : MonoBehaviour
                     badElementsDestroyed++;
                 }
                 allElements.Remove(elementHit);
-                elementCountText.text = "Bad Elements: " + badElementsDestroyed + "\n";
+                elementCountText.text = "Pollutants: " + badElementsDestroyed + "\n";
                 Destroy(elementHit);
             }
         }
@@ -141,7 +139,7 @@ public class Minigame : MonoBehaviour
             if (allElements.Count != 0)
             {
                 DestroyAllElements();
-                elementCountText.text = "Bad Elements: 0";
+                elementCountText.text = "Pollutants: 0";
                 goodElementsDestroyed = 0;
                 badElementsDestroyed = 0;
                 goodElementsSpawned = 0;
@@ -167,16 +165,16 @@ public class Minigame : MonoBehaviour
         if(badElementsSpawned >= maxBadElements) { elementAffinity = 0; }
         if(elementAffinity == 0)
         {
-            int whichElement = Random.Range(0, goodElementPrefabs.Length - 1);
+            int whichElement = Random.Range(0, goodElementPrefabs.Length - 2);
             prefabToSpawn = goodElementPrefabs[whichElement];
         }else
         {
-            int whichElement = Random.Range(0, badElementPrefabs.Length - 1);
+            int whichElement = Random.Range(0, badElementPrefabs.Length - 2);
             prefabToSpawn = badElementPrefabs[whichElement];
         }
 
         GameObject newElement = null;
-        if (prefabToSpawn.GetComponent<SpriteRenderer>().sprite == fishPrefab.GetComponent<SpriteRenderer>().sprite && x == 1)
+        if ((prefabToSpawn.GetComponent<SpriteRenderer>().sprite.name != "Hydrogen" && prefabToSpawn.GetComponent<SpriteRenderer>().sprite.name != "Oxygen" && prefabToSpawn.GetComponent<SpriteRenderer>().sprite.name != "Lead") && x == 1)
         {
               newElement = Instantiate(prefabToSpawn, startPos, Quaternion.Euler(-90f, -90f, 180f));
         }
