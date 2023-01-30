@@ -29,9 +29,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (isInMinigame) {
-            return;
-        }
+        if (isInMinigame) { return; }
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
         if (isGrounded && velocity.y < 0)
